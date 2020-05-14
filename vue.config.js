@@ -75,18 +75,18 @@ module.exports = {
       chunkFilename: "static/[name]-[hash:8].css"
     }
   },
-  // devServer: {
-  //   port: 8080,
-  //   proxy: {
-  //     '/api': {
-  //       ws: false,
-  //       target: "http://192.168.199.23:2020",
-  //     },
-  //     /** 文档 */
-  //     "/docs": {
-  //       ws: false,
-  //       target: "http://192.168.199.23:2020",
-  //     },
-  //   }
-  // },
+  devServer: {
+    port: 8080,
+    proxy: {
+      '/api': {
+        ws: false,
+        target: "http://192.168.199.23:2020",
+      },
+      /** 文档 */
+      "/docs": {
+        ws: false,
+        target: "http://192.168.199.23:2020",
+      },
+    }
+  },
 }

@@ -2,6 +2,7 @@ import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 import { Button, Message, InputNumber } from "element-ui"
 import TestChild from "./TestChild"
 import { testChildDTO } from "../dto"
+import { serverExp } from "../server"
 import "./Test.scss"
 @Component
 export default class test extends Vue {
@@ -27,7 +28,7 @@ export default class test extends Vue {
   protected msgChange(newval: number) {
     console.log('监听值：'+newval)
   }
-
+  public listData: Array<any> = [];
   /**
    * computed使用方法
    */
@@ -58,12 +59,18 @@ export default class test extends Vue {
   /**
    * created生命周期函数
    */
-  public created() {
+  public async created() {
     console.log('组件创建时created被调用')
     let person = {id: '123', name: 'xiaoming', age: 18};
     const per = new testChildDTO(person);
     // per.say();
     console.log(per)
+    try{
+      const result: any = await serverExp.getCimList('',1,10);
+      this.listData = result.data.data;
+    }catch(err) {
+      throw new Error(err)
+    }
   }
   /**
    * mounted生命周期函数
@@ -94,6 +101,10 @@ export default class test extends Vue {
         <br />
         {vm.num?(<p>{vm.num}：{vm.msg}</p>):null}
         <p>{vm.arr[0]}</p>
+        <p>循环遍历数组</p>
+        <ol>
+          {vm.listData.map(list => <li key={list.id}>{list.name}</li>)}
+        </ol>
         <TestChild msg={vm.valueChange} scopedSlots={{default: (props: any) => {
           return (
             <div style="line-height: 60px;">
