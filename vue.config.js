@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 module.exports = {
   lintOnSave: false,
   publicPath: "./",
@@ -67,7 +68,8 @@ module.exports = {
     output: {
       filename: "static/[name]-[hash:8].js",
       chunkFilename: "static/[name]-[hash:8].js"
-    }
+    },
+    plugins:[ new webpack.ProvidePlugin({ $: 'jquery', jQuery:'jquery' }) ]
   },
   css: {
     extract: {

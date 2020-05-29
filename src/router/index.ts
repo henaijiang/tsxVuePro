@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
+    path: '/Test',
     name: 'Test',
     component: () => import('@/components/Test'),
     meta: {keepAlive: false}
@@ -16,6 +16,12 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/components/TestChild'),
     meta: {keepAlive: true}
   },
+  {
+    path: '/',
+    name: 'Home',
+    component: () => import('@/components/Home'),
+    meta: {keepAlive: false}
+  }
 ]
 
 const router = new VueRouter({

@@ -3,11 +3,18 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui';
+import dataV from '@jiaminghi/data-view'
+import VCharts from 'v-charts'
+import $ from 'jquery'
 import 'element-ui/lib/theme-chalk/index.css';
-
+import 'v-charts/lib/style.css'
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI, { size: 'small' });
+
+Vue.use(dataV)
+Vue.use(VCharts)
+
 new Vue({
   router,
   store,
