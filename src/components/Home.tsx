@@ -24,8 +24,6 @@ export default class Home extends Vue {
   ]
   /**布局组件数据 */
   public layoutData: Array<any> = [];
-  /**宽度监听器 */
-  public erd: any;
   /**布局容器旧宽度 */
   public gridLayoutOldWidth: number = 0;
   /**选中组件元素数据 */
@@ -76,7 +74,6 @@ export default class Home extends Vue {
   /**销毁监听元素 */
   public beforeDestroy() {
     const vm = this;
-    // vm.erd.uninstall((vm.$refs.gridLayout as Vue).$el);
     window.removeEventListener("resize",vm.resizeEventListener)
   }
   /**大小改变 */
