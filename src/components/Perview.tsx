@@ -1,6 +1,8 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import VueGridLayout from 'vue-grid-layout'
 import { v1 } from "uuid"
+import { Button } from "element-ui"
+import screenfull from 'screenfull'
 Vue.use(VueGridLayout)
 const GridLayout = VueGridLayout.GridLayout;
 const GridItem = VueGridLayout.GridItem;
@@ -36,6 +38,18 @@ export default class Perview extends Vue{
     const vm = this;
     window.removeEventListener("resize", vm.layoutDataChange);
   }
+  public screenfullHandle() {
+    const vm = this;
+    const element = (vm.$refs.perview as Vue).$el;
+    if (!screenfull.isEnabled) {
+      vm.$message({
+        message: '不支持全屏',
+        type: 'warning'
+      })
+      return false
+    }
+    screenfull.toggle(element)
+  }
   /**
    * 注册组件并挂载到实例上
    */
@@ -57,6 +71,7 @@ export default class Perview extends Vue{
     const vm = this;
     return (
       <GridLayout
+        ref="perview"
         v-loading={vm.loading}
         layout={vm.layoutData}
         colNum={colNum}
@@ -64,7 +79,9 @@ export default class Perview extends Vue{
         margin={[10, 10]}
         isDraggable={false}
         isResizable={false}
+        style={{backgroundColor: "#fff"}}
       >
+        <Button class="saveButton" onClick={vm.screenfullHandle} type="primary" size="mini">全屏</Button>
         {vm.layoutData.map((item: any)=> 
           <GridItem
             ref="gridItem"
