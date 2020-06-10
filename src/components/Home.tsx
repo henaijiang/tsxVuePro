@@ -195,8 +195,9 @@ export default class Home extends Vue {
    * 删除组件
    * @param i 
    */
-  public deleteComponent(i: string) {
+  public deleteComponent(i: string, e:MouseEvent) {
     const vm = this;
+    e.stopPropagation();
     vm.$confirm('此操作将删除该组件, 是否继续?', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
@@ -337,7 +338,7 @@ export default class Home extends Vue {
                       <div style={{height: "100%"}}>
                         <div class="itemHeader">
                           <span>{item.component}</span>
-                          <i class="el-icon-delete iconClass" onClick={()=>{vm.deleteComponent(item.i)}}></i>
+                          <i class="el-icon-delete iconClass" onClick={(e:MouseEvent)=>{vm.deleteComponent(item.i,e)}}></i>
                         </div>
                         <Divider></Divider>
                         <div ref={item.key} class="itemMain"></div>
