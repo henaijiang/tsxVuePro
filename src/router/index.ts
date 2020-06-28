@@ -21,6 +21,12 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: () => import('@/components/Home'),
     meta: {keepAlive: false}
+  },
+  {
+    path: '/AntiShake',
+    name: 'AntiShake',
+    component: () => import('@/components/AntiShake.vue'),
+    meta: {keepAlive: false}
   }
 ]
 
