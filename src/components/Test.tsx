@@ -4,6 +4,7 @@ import TestChild from "./TestChild"
 import { testChildDTO } from "../dto"
 import { serverExp } from "../server"
 import "./Test.scss"
+import { HButton, HInput } from "tsvue-h-ui"
 @Component
 export default class test extends Vue {
   public msg: string = '';
@@ -117,6 +118,8 @@ export default class test extends Vue {
           <p style={{color:'black'}} slot="footer">我是插槽footer内容</p>
         </TestChild>
         <InputNumber v-model={vm.vuexCount}></InputNumber>
+        <HButton color={"red"} on-click={(e)=>{console.log(e)}}>测试按钮</HButton>
+        <HInput />
       </div>
     )
   }

@@ -8,10 +8,12 @@ import VCharts from 'v-charts'
 import $ from 'jquery'
 import 'element-ui/lib/theme-chalk/index.css';
 import 'v-charts/lib/style.css'
+import HUI from "tsvue-h-ui"
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI, { size: 'small' });
 
+Vue.use(HUI)
 Vue.use(dataV)
 Vue.use(VCharts)
 
