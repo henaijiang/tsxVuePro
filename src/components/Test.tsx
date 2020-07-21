@@ -118,7 +118,7 @@ export default class test extends Vue {
           <p style={{color:'black'}} slot="footer">我是插槽footer内容</p>
         </TestChild>
         <InputNumber v-model={vm.vuexCount}></InputNumber>
-        <HButton color={"red"} on-click={(e)=>{console.log(e)}}>测试按钮</HButton>
+        <HButton color={"red"} on-click={(e: MouseEvent)=>{console.log(e)}}>测试按钮</HButton>
         <HInput />
       </div>
     )
