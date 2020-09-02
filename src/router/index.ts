@@ -18,6 +18,12 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/',
+    name: 'MapboxGl',
+    component: () => import('@/components/MapboxGl'),
+    meta: {keepAlive: false}
+  },
+  {
+    path: '/Home',
     name: 'Home',
     component: () => import('@/components/Home'),
     meta: {keepAlive: false}

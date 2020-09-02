@@ -88,7 +88,7 @@ module.exports = {
       "/docs": {
         ws: false,
         target: "http://192.168.199.23:2020",
-      },
+      }
     }
   },
 }

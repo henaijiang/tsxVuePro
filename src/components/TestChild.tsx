@@ -59,7 +59,7 @@ export default class TestChild extends Vue{
             <Input vModel={vm.ruleForm.inputVal}></Input>
           </FormItem>
           <FormItem>
-            <Button type="primary" onClick={vm.submitForm}>立即创建</Button>
+            <Button type="success" onClick={vm.submitForm}>立即创建</Button>
           </FormItem>
           <FormItem>
             <Checkbox vModel={vm.check} onChange={vm.checkChange} />

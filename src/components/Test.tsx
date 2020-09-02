@@ -5,6 +5,9 @@ import { testChildDTO } from "../dto"
 import { serverExp } from "../server"
 import "./Test.scss"
 import { HButton, HInput } from "tsvue-h-ui"
+import Rhomboid from "./rhomboid/Rhomboid"
+import PickColor from "./pickColor.vue"
+// const et = require('element-theme')
 @Component
 export default class test extends Vue {
   public msg: string = '';
@@ -81,7 +84,7 @@ export default class test extends Vue {
     setTimeout(()=>{
       this.arr[0] = 666;
       console.log(this.arr[0]);
-    },3000)
+    },500)
   }
   /**
    * beforeDestroy
@@ -94,11 +97,20 @@ export default class test extends Vue {
     vm.$router.push({path: '/TestChild'})
   }
   public slotProp: any = ""
+  handleClick(e: MouseEvent) {
+    console.log(e)
+  }
+  color = ""
+
   public render() {
     const vm = this;
     return (
-      <div class="class1">
-        <Button ref="button" class="class2" title='电蚊拍' onClick={vm.clickMethod}>点我</Button>
+      <div class="class1" style={{'--primarycolor': 'red'}}>
+        <el-color-picker vModel={vm.color}></el-color-picker>
+        {/* <PickColor /> */}
+        <el-table border data={[{1:1}]}></el-table>
+        <Rhomboid textLabel='测试' boxColor='red' on-handleClick={vm.handleClick} />
+        <Button type="primary" ref="button" title='电蚊拍' onClick={vm.clickMethod}>点我</Button>
         <br />
         {vm.num?(<p>{vm.num}：{vm.msg}</p>):null}
         <p>{vm.arr[0]}</p>
