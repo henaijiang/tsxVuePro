@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/Test',
+    path: '/',
     name: 'Test',
     component: () => import('@/components/Test'),
     meta: {keepAlive: false}
@@ -17,7 +17,7 @@ const routes: Array<RouteConfig> = [
     meta: {keepAlive: true}
   },
   {
-    path: '/',
+    path: '/MapboxGl',
     name: 'MapboxGl',
     component: () => import('@/components/MapboxGl'),
     meta: {keepAlive: false}

@@ -7,13 +7,18 @@ import "./Test.scss"
 import { HButton, HInput } from "tsvue-h-ui"
 import Rhomboid from "./rhomboid/Rhomboid"
 import PickColor from "./pickColor.vue"
-// const et = require('element-theme')
+import { getStyle } from "../element-theme/getStyle"
+import { ThemeColorDTO } from "../element-theme/ThemeColorDTO"
+import ElTheme from "../element-theme/ElTheme"
+import { ThemeConfigDTO } from '@/element-theme/ThemeConfigDTO'
 @Component
 export default class test extends Vue {
   public msg: string = '';
   public num: number = 0;
   public value: string = '';
   public arr: Array<number> = [0]
+  private color: string = "";
+  private themeVisible: boolean = false;
   /**
    * prop用法
    */
@@ -59,6 +64,7 @@ export default class test extends Vue {
     Message({message: vm.msg, type: 'success'})
     vm.num++;
     console.log('prop值：'+this.propVal);
+    vm.themeVisible = true;
   }
   /**
    * created生命周期函数
@@ -70,8 +76,8 @@ export default class test extends Vue {
     // per.say();
     console.log(per)
     try{
-      const result: any = await serverExp.getCimList('',1,10);
-      this.listData = result.data.data;
+      // const result: any = await serverExp.getCimList('',1,10);
+      // this.listData = result.data.data;
     }catch(err) {
       throw new Error(err)
     }
@@ -85,6 +91,7 @@ export default class test extends Vue {
       this.arr[0] = 666;
       console.log(this.arr[0]);
     },500)
+    console.log(new ThemeColorDTO())
   }
   /**
    * beforeDestroy
@@ -97,21 +104,26 @@ export default class test extends Vue {
     vm.$router.push({path: '/TestChild'})
   }
   public slotProp: any = ""
-  handleClick(e: MouseEvent) {
+  private handleClick(e: MouseEvent) {
     console.log(e)
   }
-  color = ""
-
+  private themeConfig: ThemeConfigDTO = new ThemeConfigDTO()
+  private themeConfigChange(colors: ThemeConfigDTO) {
+    console.log(colors)
+  }
   public render() {
     const vm = this;
     return (
       <div class="class1" style={{'--primarycolor': 'red'}}>
-        <el-color-picker vModel={vm.color}></el-color-picker>
-        {/* <PickColor /> */}
-        <el-table border data={[{1:1}]}></el-table>
         <Rhomboid textLabel='测试' boxColor='red' on-handleClick={vm.handleClick} />
-        <Button type="primary" ref="button" title='电蚊拍' onClick={vm.clickMethod}>点我</Button>
         <br />
+        <Button type="primary" ref="button" onClick={vm.clickMethod}>点我换肤</Button>
+        <br />
+        <el-dialog width="30%" visible={vm.themeVisible} {...{on:{'update:visible': (visible: boolean)=>{vm.themeVisible = visible} }}}>
+          <el-collapse>
+            <ElTheme on-themeConfigChange={vm.themeConfigChange} themeConfig={vm.themeConfig} />
+          </el-collapse>
+        </el-dialog>
         {vm.num?(<p>{vm.num}：{vm.msg}</p>):null}
         <p>{vm.arr[0]}</p>
         <p>循环遍历数组</p>

@@ -10,7 +10,7 @@
 <script>
 
 const version = require('element-ui/package.json').version // element-ui version from node_modules
-const ORIGINAL_THEME = '#DCDFE6' // default color
+const ORIGINAL_THEME = '#409EFF' // default color
 export default {
   name: 'PickColor',
   props: {
@@ -32,12 +32,12 @@ export default {
     }
   },
   mounted() {
-    console.log(require('element-ui/lib/theme-chalk/index.css'))
     if(this.default != null) {
       this.theme = this.default
       this.$emit('onThemeChange', this.theme)
       this.showSuccess = false
     }
+    console.log(version)
   },
   watch: {
     theme(val, oldVal) {
@@ -61,7 +61,7 @@ export default {
       }
 
       const chalkHandler = getHandler('chalk', 'chalk-style')
-
+      
       if (!this.chalk) {
         const url = `https://unpkg.com/element-ui@${version}/lib/theme-chalk/index.css`
         this.getCSSString(url, chalkHandler, 'chalk')
@@ -98,6 +98,7 @@ export default {
     updateStyle(style, oldCluster, newCluster) {
       let newStyle = style
       oldCluster.forEach((color, index) => {
+        console.log(new RegExp(color, 'ig'))
         newStyle = newStyle.replace(new RegExp(color, 'ig'), newCluster[index])
       })
       return newStyle
@@ -157,6 +158,7 @@ export default {
         clusters.push(tintColor(theme, Number((i / 10).toFixed(2))))
       }
       clusters.push(shadeColor(theme, 0.1))
+      console.log(clusters)
       return clusters
     }
   }

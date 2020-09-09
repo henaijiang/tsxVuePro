@@ -1,0 +1,29 @@
+.clearBut{
+  .el-color-dropdown__btns>button:nth-child(2){
+    display: none !important;
+  }
+}
+.colorPick{
+  margin-left: 10px;
+}
+.config{
+  padding: 5px 0;
+  .config-label{
+    font-size: 14px;
+    padding-bottom: 8px;
+  }
+  .config-content{
+    width: 100%;
+    display: flex;
+    height: 36px;
+    .content-80{
+      width: calc(100% - 46px);
+      input{
+        cursor: pointer;
+      }
+    }
+    .content-20{
+      width: 36px;
+    }
+  }
+}
