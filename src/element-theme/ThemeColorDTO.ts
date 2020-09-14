@@ -13,18 +13,34 @@ class ThemeColorDTO extends ThemeConfigDTO {
   colorPrimary9: string = '';
   shadePrimaryColor: string = '';
   //success色及其相关色
+  colorSuccess2: string = '';
+  colorSuccess4: string = '';
+  colorSuccess5: string = '';
+  colorSuccess6: string = '';
   colorSuccessLight: string = '';
   colorSuccessLighter: string = '';
   shadeSuccessColor: string = '';
   //warning色及其相关色
+  colorWarning2: string = '';
+  colorWarning4: string = '';
+  colorWarning5: string = '';
+  colorWarning6: string = '';
   colorWarningLight: string = '';
   colorWarningLighter: string = '';
   shadeWarningColor: string = '';
   //danger色及其相关色
+  colorDanger2: string = '';
+  colorDanger4: string = '';
+  colorDanger5: string = '';
+  colorDanger6: string = '';
   colorDangerLight: string = '';
   colorDangerLighter: string = '';
   shadeDangerColor: string = '';
   //info色及其相关色
+  colorInfo2: string = '';
+  colorInfo4: string = '';
+  colorInfo5: string = '';
+  colorInfo6: string = '';
   colorInfoLight: string = '';
   colorInfoLighter: string = '';
   shadeInfoColor: string = '';
@@ -80,18 +96,34 @@ class ThemeColorDTO extends ThemeConfigDTO {
     this.colorPrimary9 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorPrimary, 0.9);
     this.shadePrimaryColor = ThemeColorDTO.shadeColor(this.colorPrimary, 0.1);
 
+    this.colorSuccess2 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorSuccess, 0.2);
+    this.colorSuccess4 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorSuccess, 0.4);
+    this.colorSuccess5 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorSuccess, 0.5);
+    this.colorSuccess6 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorSuccess, 0.6);
     this.colorSuccessLight = ThemeColorDTO.getMixColor(this.colorWhite, this.colorSuccess, 0.8);
     this.colorSuccessLighter = ThemeColorDTO.getMixColor(this.colorWhite, this.colorSuccess, 0.9);
     this.shadeSuccessColor = ThemeColorDTO.shadeColor(this.colorSuccess, 0.1);
     
+    this.colorWarning2 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorWarning, 0.2);
+    this.colorWarning4 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorWarning, 0.4);
+    this.colorWarning5 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorWarning, 0.5);
+    this.colorWarning6 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorWarning, 0.6);
     this.colorWarningLight = ThemeColorDTO.getMixColor(this.colorWhite, this.colorWarning, 0.8);
     this.colorWarningLighter = ThemeColorDTO.getMixColor(this.colorWhite, this.colorWarning, 0.9);
     this.shadeWarningColor = ThemeColorDTO.shadeColor(this.colorWarning, 0.1);
-    
+
+    this.colorDanger2 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorDanger, 0.2);
+    this.colorDanger4 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorDanger, 0.4);
+    this.colorDanger5 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorDanger, 0.5);
+    this.colorDanger6 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorDanger, 0.6);
     this.colorDangerLight = ThemeColorDTO.getMixColor(this.colorWhite, this.colorDanger, 0.8);
     this.colorDangerLighter = ThemeColorDTO.getMixColor(this.colorWhite, this.colorDanger, 0.9);
     this.shadeDangerColor = ThemeColorDTO.shadeColor(this.colorDanger, 0.1);
     
+    this.colorInfo2 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorInfo, 0.2);
+    this.colorInfo4 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorInfo, 0.4);
+    this.colorInfo5 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorInfo, 0.5);
+    this.colorInfo6 = ThemeColorDTO.getMixColor(this.colorWhite, this.colorInfo, 0.6);
     this.colorInfoLight = ThemeColorDTO.getMixColor(this.colorWhite, this.colorInfo, 0.8);
     this.colorInfoLighter = ThemeColorDTO.getMixColor(this.colorWhite, this.colorInfo, 0.9);
     this.shadeInfoColor = ThemeColorDTO.shadeColor(this.colorInfo, 0.1);
