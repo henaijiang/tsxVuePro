@@ -46,6 +46,7 @@ export default class MapboxGlJs extends Vue {
       alert('Your browser does not support Mapbox GL');
       return
     }
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaGVuYWlqaWFuZyIsImEiOiJja2djNzVlZXAwMHJjMnBuN3ZtaHdpZjI1In0.J826y8Xb8OV6LpMNbmH4VQ';
     if(!vm.mapboxOptions.style){
       throw new Error('style属性时必须的');
       return

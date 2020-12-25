@@ -6,14 +6,20 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Test',
-    component: () => import('@/components/Test'),
+    name: 'index',
+    component: () => import('@/components/index'),
     meta: {keepAlive: false}
   },
   {
-    path: '/TestChild',
-    name: 'TestChild',
-    component: () => import('@/components/TestChild'),
+    path: '/Three',
+    name: 'Three',
+    component: () => import('@/components/three/Threejs'),
+    meta: {keepAlive: false}
+  },
+  {
+    path: '/Test',
+    name: 'Test',
+    component: () => import('@/components/Test'),
     meta: {keepAlive: true}
   },
   {

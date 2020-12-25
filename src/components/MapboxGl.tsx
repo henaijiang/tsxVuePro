@@ -16,7 +16,7 @@ export default class MapboxGl extends Vue {
     console.log(targetFeature, geoJSONFeatures, e)
   }
   /**参考类 MapboxOptions */
-  public mapboxOptions: MapboxOptions = {container: '',style: 'http://192.168.199.179:1099/map/big-screen.json', crossSourceCollisions: false,}
+  public mapboxOptions: MapboxOptions = {container: '',style: 'mapbox://styles/mapbox/dark-v10', crossSourceCollisions: false,}
   /**右键菜单 */
   handleContextmenu(targetFeature: mapboxgl.MapboxGeoJSONFeature | null, geoJSONFeatures: mapboxgl.MapboxGeoJSONFeature[], e: mapboxgl.MapMouseEvent) {
     const vm = this;
