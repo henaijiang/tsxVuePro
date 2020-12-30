@@ -1,29 +1,29 @@
-const webpack = require('webpack')
+const webpack = require("webpack");
 module.exports = {
   lintOnSave: false,
   publicPath: "./",
   productionSourceMap: false,
-  chainWebpack: (config) => {
+  chainWebpack: config => {
     /* 修改入口文件 */
     config
-    .entry("app")
-    .clear()
-    .add("./src/main.ts");
+      .entry("app")
+      .clear()
+      .add("./src/main.ts");
 
     config.module
-    .rule("images")
-    .use("url-loader")
-    .tap(options =>
-      Object.assign({}, options, {
-        name: "static/[name]-[hash:8].[ext]",
-        fallback: {
-          loader: "file-loader",
-          options: {
-            name: "static/[name]-[hash:8].[ext]"
+      .rule("images")
+      .use("url-loader")
+      .tap(options =>
+        Object.assign({}, options, {
+          name: "static/[name]-[hash:8].[ext]",
+          fallback: {
+            loader: "file-loader",
+            options: {
+              name: "static/[name]-[hash:8].[ext]"
+            }
           }
-        }
-      })
-    );
+        })
+      );
 
     config.module
       .rule("svg")
@@ -69,7 +69,7 @@ module.exports = {
       filename: "static/[name]-[hash:8].js",
       chunkFilename: "static/[name]-[hash:8].js"
     },
-    plugins:[ new webpack.ProvidePlugin({ $: 'jquery', jQuery:'jquery' }) ]
+    plugins: [new webpack.ProvidePlugin({ $: "jquery", jQuery: "jquery" })]
   },
   css: {
     extract: {
@@ -80,15 +80,15 @@ module.exports = {
   devServer: {
     port: 8080,
     proxy: {
-      '/api': {
+      "/api": {
         ws: false,
-        target: "http://192.168.199.23:2020",
+        target: "http://192.168.199.23:2020"
       },
       /** 文档 */
       "/docs": {
         ws: false,
-        target: "http://192.168.199.23:2020",
+        target: "http://192.168.199.23:2020"
       }
     }
-  },
-}
+  }
+};

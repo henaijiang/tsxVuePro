@@ -4,7 +4,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Stats from "three/examples/jsm/libs/stats.module"
 import { DoubleSide } from 'three';
-
+import _ from "lodash"
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 @Component
 export default class Threejs extends Vue {
 
@@ -14,6 +16,11 @@ export default class Threejs extends Vue {
   clock!: THREE.Clock
   controls!: OrbitControls
   stats!: Stats
+  mouse = new THREE.Vector2()
+  debounceWindowResize = _.debounce(this.onWindowResize, 100)
+  raycaster = new THREE.Raycaster();
+  //当前选中的元素
+  INTERSECTED!: THREE.Object3D | null
   mounted() {
     const vm = this;
     vm.initScene();
@@ -22,11 +29,19 @@ export default class Threejs extends Vue {
     vm.createdBox();
     vm.createdLine();
     vm.initBall();
+    vm.loadObjModel('model/IronMan/IronMan', 0.5, new THREE.Vector3(0, -4, 0));
+    vm.loadObjModel('model/wolf/Wolf_One_obj', 60, new THREE.Vector3(50, 45, 0));
     vm.renderControls();
-    window.onresize = vm.onWindowResize;
+    window.addEventListener( 'resize', vm.debounceWindowResize, false );
+    window.addEventListener( 'mousemove', vm.onMouseMove, false );
+  }
+  beforeDestroy() {
+    const vm = this;
+    window.removeEventListener( 'resize', vm.debounceWindowResize, false );
+    window.removeEventListener( 'mousemove', vm.onMouseMove, false );
   }
   /**
-   * 创建场景
+   * 创建场景及相机
    */
   initScene() {
     const vm = this;
@@ -35,8 +50,8 @@ export default class Threejs extends Vue {
       return
     }
     vm.scene = new THREE.Scene();
-    vm.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
-    vm.camera.position.set(0, 100, 200);
+    vm.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 10000 );
+    vm.camera.position.set(0, 200, 150);
     vm.camera.lookAt(new THREE.Vector3(0, 0, 0));
     //antialias:true增加抗锯齿效果
     vm.renderer = new THREE.WebGLRenderer({antialias:true});
@@ -131,18 +146,31 @@ export default class Threejs extends Vue {
   renderControls(){
     const vm = this;
     vm.stats.begin();
+    // 通过摄像机和鼠标位置更新射线
+    vm.raycaster.setFromCamera( vm.mouse, vm.camera );
+    // 计算物体和射线的焦点
+    var intersects = vm.raycaster.intersectObjects( vm.scene.children );
+    if ( intersects.length > 0 ) {
+      vm.INTERSECTED = intersects[0].object;
+    } else {
+      vm.INTERSECTED = null;
+    }
     vm.controls.update();
     vm.renderer.render(vm.scene, vm.camera);
     vm.stats.end();
     requestAnimationFrame(vm.renderControls);
+
   }
   /**
    * 创建平面
    */
   initPlane() {
     const vm = this;
-    let planeGeometry = new THREE.PlaneGeometry(500, 500);
-    let planeMaterial = new THREE.MeshLambertMaterial({color: 0xaaaaaa, side: THREE.DoubleSide});
+    let planeGeometry = new THREE.PlaneGeometry(1000, 1000);
+    //材质
+    let textureLoader = new THREE.TextureLoader();
+    let planeTexture = textureLoader.load(require('../../assets/plane.jpg'));
+    let planeMaterial = new THREE.MeshLambertMaterial({map: planeTexture, side: THREE.DoubleSide});
     let plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.rotation.x = -0.5 * Math.PI;
     plane.position.y = -5.1;
@@ -184,15 +212,15 @@ export default class Threejs extends Vue {
     let ambientLight = new THREE.AmbientLight("#111111");
     vm.scene.add(ambientLight);
     //平行光源
-    let directionalLight = new THREE.DirectionalLight("#ffffff");
-    directionalLight.position.set(100, 60, 100);
+    let directionalLight = new THREE.DirectionalLight("#ffffff", 1);
+    directionalLight.position.set(1000, 1000, 1000);
 
-    directionalLight.shadow.camera.near = 1; //产生阴影的最近距离
-    directionalLight.shadow.camera.far = 400; //产生阴影的最远距离
-    directionalLight.shadow.camera.left = -50; //产生阴影距离位置的最左边位置
-    directionalLight.shadow.camera.right = 50; //最右边
-    directionalLight.shadow.camera.top = 50; //最上边
-    directionalLight.shadow.camera.bottom = -50; //最下面
+    directionalLight.shadow.camera.near = 0.1; //产生阴影的最近距离
+    directionalLight.shadow.camera.far = 2000; //产生阴影的最远距离
+    directionalLight.shadow.camera.left = -500; //产生阴影距离位置的最左边位置
+    directionalLight.shadow.camera.right = 500; //最右边
+    directionalLight.shadow.camera.top = 500; //最上边
+    directionalLight.shadow.camera.bottom = -500; //最下面
 
     //这两个值决定生成阴影密度 默认512
     directionalLight.shadow.mapSize.height = 1024;
@@ -208,18 +236,58 @@ export default class Threejs extends Vue {
    */
   createdBox(){
     const vm = this;
-    let geometry = new THREE.BoxGeometry( 50, 10, 50 );
+    let geometry = new THREE.BoxGeometry( 50, 50, 50 );
     //材质
     let textureLoader = new THREE.TextureLoader();
-    let boxTexture = textureLoader.load(require('../../assets/OIP.jpg'));
+    let boxTexture = textureLoader.load(require('../../assets/box.jpg'));
     //side: DoubleSide 双面渲染，可进入内部
     let material = new THREE.MeshBasicMaterial( { map: boxTexture, side: DoubleSide } );
     let cube = new THREE.Mesh( geometry, material );
     cube.castShadow = true; //开启阴影
     vm.scene.add( cube );
-    cube.position.set(50,0,0)
+    cube.position.set(50,20,0);
   }
-
+  /**
+   * 鼠标移动事件
+   * @param event 
+   */
+  onMouseMove(event: MouseEvent) {
+    const vm = this;
+    // 将鼠标位置归一化为设备坐标。x 和 y 方向的取值范围是 (-1 to +1)
+    vm.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    vm.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  }
+  /**
+   * 加载3d模型-.obj文件
+   */
+  loadObjModel(path: string, scale: number, position: THREE.Vector3) {
+    const vm = this;
+    let objLoader = new OBJLoader();
+    let mtlLoader = new MTLLoader();
+    mtlLoader.load(`${path}.mtl`,(materials)=>{
+      objLoader.setMaterials(materials);
+      objLoader.load(`${path}.obj`, (obj)=>{
+        obj.scale.set(scale,scale,scale)
+        obj.position.set(position.x, position.y, position.z);
+        obj.castShadow = true;
+        obj.children.forEach(child=>{
+          child.castShadow = true; //开启阴影
+        })
+        vm.scene.add(obj);
+        //下载json文件
+        /* let content = obj.toJSON()
+        content = JSON.stringify(content)
+        var blob = new Blob([content], {
+          type: "text/plain;charset=utf-8"
+        });
+        var objurl = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.download = "json.txt";
+        link.href = objurl;
+        link.click(); */
+      })
+    })
+  }
   render() {
     const vm = this;
     return (
