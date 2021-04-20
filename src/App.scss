@@ -1,0 +1,30 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.container {
+  height: 100%;
+  .container-header {
+    background: #409eff;
+    display: flex;
+    justify-content: space-between;
+    .user {
+      line-height: 60px;
+    }
+    .clock {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      line-height: 20px;
+      padding: 10px 0;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+    }
+    .clock:hover {
+      color: #fff;
+    }
+  }
+}

@@ -1,26 +1,25 @@
-import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
-import * as THREE from 'three';
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
+import * as THREE from "three";
 //引入控件支持鼠标左中右键操作和键盘方向键操作插件
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import Stats from "three/examples/jsm/libs/stats.module"
-import { DoubleSide } from 'three';
-import _ from "lodash"
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
-import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import Stats from "three/examples/jsm/libs/stats.module";
+import { DoubleSide } from "three";
+import _ from "lodash";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 @Component
 export default class Threejs extends Vue {
-
-  scene!: THREE.Scene
-  camera!: THREE.PerspectiveCamera
-  renderer!: THREE.WebGLRenderer
-  clock!: THREE.Clock
-  controls!: OrbitControls
-  stats!: Stats
-  mouse = new THREE.Vector2()
-  debounceWindowResize = _.debounce(this.onWindowResize, 100)
+  scene!: THREE.Scene;
+  camera!: THREE.PerspectiveCamera;
+  renderer!: THREE.WebGLRenderer;
+  clock!: THREE.Clock;
+  controls!: OrbitControls;
+  stats!: Stats;
+  mouse = new THREE.Vector2();
+  debounceWindowResize = _.debounce(this.onWindowResize, 100);
   raycaster = new THREE.Raycaster();
   //当前选中的元素
-  INTERSECTED!: THREE.Object3D | null
+  INTERSECTED!: THREE.Object3D | null;
   mounted() {
     const vm = this;
     vm.initScene();
@@ -29,16 +28,20 @@ export default class Threejs extends Vue {
     vm.createdBox();
     vm.createdLine();
     vm.initBall();
-    vm.loadObjModel('model/IronMan/IronMan', 0.5, new THREE.Vector3(0, -4, 0));
-    vm.loadObjModel('model/wolf/Wolf_One_obj', 60, new THREE.Vector3(50, 45, 0));
+    vm.loadObjModel("model/IronMan/IronMan", 0.5, new THREE.Vector3(0, -4, 0));
+    vm.loadObjModel(
+      "model/wolf/Wolf_One_obj",
+      60,
+      new THREE.Vector3(50, 45, 0)
+    );
     vm.renderControls();
-    window.addEventListener( 'resize', vm.debounceWindowResize, false );
-    window.addEventListener( 'mousemove', vm.onMouseMove, false );
+    window.addEventListener("resize", vm.debounceWindowResize, false);
+    window.addEventListener("mousemove", vm.onMouseMove, false);
   }
   beforeDestroy() {
     const vm = this;
-    window.removeEventListener( 'resize', vm.debounceWindowResize, false );
-    window.removeEventListener( 'mousemove', vm.onMouseMove, false );
+    window.removeEventListener("resize", vm.debounceWindowResize, false);
+    window.removeEventListener("mousemove", vm.onMouseMove, false);
   }
   /**
    * 创建场景及相机
@@ -46,17 +49,22 @@ export default class Threejs extends Vue {
   initScene() {
     const vm = this;
     let container = document.getElementById("threejs");
-    if(!container){
-      return
+    if (!container) {
+      return;
     }
     vm.scene = new THREE.Scene();
-    vm.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 10000 );
+    vm.camera = new THREE.PerspectiveCamera(
+      45,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      10000
+    );
     vm.camera.position.set(0, 200, 150);
     vm.camera.lookAt(new THREE.Vector3(0, 0, 0));
     //antialias:true增加抗锯齿效果
-    vm.renderer = new THREE.WebGLRenderer({antialias:true});
-    vm.renderer.setSize(window.innerWidth , window.innerHeight);
-    vm.renderer.setPixelRatio( window.devicePixelRatio );
+    vm.renderer = new THREE.WebGLRenderer({ antialias: true });
+    vm.renderer.setSize(window.innerWidth, window.innerHeight);
+    vm.renderer.setPixelRatio(window.devicePixelRatio);
     vm.renderer.shadowMap.enabled = true;
     vm.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // 默认的是，没有设置的这个清晰 THREE.PCFShadowMap
     container.appendChild(vm.renderer.domElement);
@@ -96,7 +104,7 @@ export default class Threejs extends Vue {
 
     // 当前相机水平位置下在焦点的z轴正方向可以偏转的弧度，默认无限旋转。
     // 如果不可以无限旋转，只能够从左方和右方旋转180度，可以设置成minAzimuthAngle = - Math.PI maxAzimuthAngle = Math.PI
-    control.minAzimuthAngle = - Infinity; // 弧度
+    control.minAzimuthAngle = -Infinity; // 弧度
     control.maxAzimuthAngle = Infinity; // 弧度
 
     // 是否开启拖拽后的惯性（停止拖拽后，相机会慢慢停下来），如果开启了当前的属性，还需要在动画循环中调用相机的update()更新位置
@@ -115,7 +123,7 @@ export default class Threejs extends Vue {
     control.enablePan = true;
     control.panSpeed = 1.0;
     control.screenSpacePanning = false; // 移动相机位置焦点默认是修改x轴和z轴方向，如果将此值修改为true，焦点位置将修改x轴和y轴方向
-    control.keyPanSpeed = 7.0;	// 修改焦点位置移动的速度
+    control.keyPanSpeed = 7.0; // 修改焦点位置移动的速度
 
     // 设置当前是否自动旋转
     control.autoRotate = false;
@@ -128,7 +136,11 @@ export default class Threejs extends Vue {
     control.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40 };
 
     // 控制相机控制器的鼠标按键设置 默认左键旋转，中键缩放，右键移动焦点位置
-    control.mouseButtons = { LEFT: THREE.MOUSE.LEFT, MIDDLE: THREE.MOUSE.MIDDLE, RIGHT: THREE.MOUSE.RIGHT };
+    control.mouseButtons = {
+      LEFT: THREE.MOUSE.LEFT,
+      MIDDLE: THREE.MOUSE.MIDDLE,
+      RIGHT: THREE.MOUSE.RIGHT
+    };
     vm.controls = control;
   }
   /**
@@ -138,19 +150,19 @@ export default class Threejs extends Vue {
     const vm = this;
     vm.camera.aspect = window.innerWidth / window.innerHeight;
     vm.camera.updateProjectionMatrix();
-    vm.renderer.setSize(window.innerWidth , window.innerHeight);
+    vm.renderer.setSize(window.innerWidth, window.innerHeight);
   }
   /**
    * 刷新视图
    */
-  renderControls(){
+  renderControls() {
     const vm = this;
     vm.stats.begin();
     // 通过摄像机和鼠标位置更新射线
-    vm.raycaster.setFromCamera( vm.mouse, vm.camera );
+    vm.raycaster.setFromCamera(vm.mouse, vm.camera);
     // 计算物体和射线的焦点
-    var intersects = vm.raycaster.intersectObjects( vm.scene.children );
-    if ( intersects.length > 0 ) {
+    var intersects = vm.raycaster.intersectObjects(vm.scene.children);
+    if (intersects.length > 0) {
       vm.INTERSECTED = intersects[0].object;
     } else {
       vm.INTERSECTED = null;
@@ -159,7 +171,6 @@ export default class Threejs extends Vue {
     vm.renderer.render(vm.scene, vm.camera);
     vm.stats.end();
     requestAnimationFrame(vm.renderControls);
-
   }
   /**
    * 创建平面
@@ -169,8 +180,18 @@ export default class Threejs extends Vue {
     let planeGeometry = new THREE.PlaneGeometry(1000, 1000);
     //材质
     let textureLoader = new THREE.TextureLoader();
-    let planeTexture = textureLoader.load(require('../../assets/plane.jpg'));
-    let planeMaterial = new THREE.MeshLambertMaterial({map: planeTexture, side: THREE.DoubleSide});
+    let planeTexture = textureLoader.load(require("../../assets/plane.jpg"));
+    // 设置阵列模式   默认ClampToEdgeWrapping  RepeatWrapping：阵列  镜像阵列：MirroredRepeatWrapping
+    planeTexture.wrapS = THREE.RepeatWrapping;
+    planeTexture.wrapT = THREE.RepeatWrapping;
+    // uv两个方向纹理重复数量
+    planeTexture.repeat.set(4, 4);
+    // 偏移范围-1~1
+    planeTexture.offset = new THREE.Vector2(0.5, 0.5);
+    let planeMaterial = new THREE.MeshLambertMaterial({
+      map: planeTexture,
+      side: THREE.DoubleSide
+    });
     let plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.rotation.x = -0.5 * Math.PI;
     plane.position.y = -5.1;
@@ -183,7 +204,7 @@ export default class Threejs extends Vue {
   initBall() {
     const vm = this;
     let sphereGeometry = new THREE.SphereGeometry(5, 24, 16);
-    let sphereMaterial = new THREE.MeshStandardMaterial({color: 0xff00ff});
+    let sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xff00ff });
     let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.castShadow = true; //开启阴影
     sphere.position.set(0, 0, 30);
@@ -194,14 +215,14 @@ export default class Threejs extends Vue {
    */
   createdLine() {
     const vm = this;
-    let material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+    let material = new THREE.LineBasicMaterial({ color: 0x0000ff });
     let geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3( -10, 0, 0) );
-    geometry.vertices.push(new THREE.Vector3( 0, 10, 0) );
-    geometry.vertices.push(new THREE.Vector3( 10, 0, 0) );
-    let line = new THREE.Line( geometry, material );
-    vm.scene.add( line );
-    vm.renderer.render( vm.scene, vm.camera );
+    geometry.vertices.push(new THREE.Vector3(-10, 0, 0));
+    geometry.vertices.push(new THREE.Vector3(0, 10, 0));
+    geometry.vertices.push(new THREE.Vector3(10, 0, 0));
+    let line = new THREE.Line(geometry, material);
+    vm.scene.add(line);
+    vm.renderer.render(vm.scene, vm.camera);
   }
   /**
    * 创建光源
@@ -234,28 +255,31 @@ export default class Threejs extends Vue {
   /**
    * 创建长方体
    */
-  createdBox(){
+  createdBox() {
     const vm = this;
-    let geometry = new THREE.BoxGeometry( 50, 50, 50 );
+    let geometry = new THREE.BoxGeometry(50, 50, 50);
     //材质
     let textureLoader = new THREE.TextureLoader();
-    let boxTexture = textureLoader.load(require('../../assets/box.jpg'));
+    let boxTexture = textureLoader.load(require("../../assets/box.jpg"));
     //side: DoubleSide 双面渲染，可进入内部
-    let material = new THREE.MeshBasicMaterial( { map: boxTexture, side: DoubleSide } );
-    let cube = new THREE.Mesh( geometry, material );
+    let material = new THREE.MeshBasicMaterial({
+      map: boxTexture,
+      side: DoubleSide
+    });
+    let cube = new THREE.Mesh(geometry, material);
     cube.castShadow = true; //开启阴影
-    vm.scene.add( cube );
-    cube.position.set(50,20,0);
+    vm.scene.add(cube);
+    cube.position.set(50, 20, 0);
   }
   /**
    * 鼠标移动事件
-   * @param event 
+   * @param event
    */
   onMouseMove(event: MouseEvent) {
     const vm = this;
     // 将鼠标位置归一化为设备坐标。x 和 y 方向的取值范围是 (-1 to +1)
-    vm.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    vm.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    vm.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    vm.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   }
   /**
    * 加载3d模型-.obj文件
@@ -264,15 +288,15 @@ export default class Threejs extends Vue {
     const vm = this;
     let objLoader = new OBJLoader();
     let mtlLoader = new MTLLoader();
-    mtlLoader.load(`${path}.mtl`,(materials)=>{
+    mtlLoader.load(`${path}.mtl`, materials => {
       objLoader.setMaterials(materials);
-      objLoader.load(`${path}.obj`, (obj)=>{
-        obj.scale.set(scale,scale,scale)
+      objLoader.load(`${path}.obj`, obj => {
+        obj.scale.set(scale, scale, scale);
         obj.position.set(position.x, position.y, position.z);
         obj.castShadow = true;
-        obj.children.forEach(child=>{
+        obj.children.forEach(child => {
           child.castShadow = true; //开启阴影
-        })
+        });
         vm.scene.add(obj);
         //下载json文件
         /* let content = obj.toJSON()
@@ -285,14 +309,13 @@ export default class Threejs extends Vue {
         link.download = "json.txt";
         link.href = objurl;
         link.click(); */
-      })
-    })
+      });
+    });
   }
   render() {
     const vm = this;
     return (
-      <div id="threejs">
-      </div>
-    )
+      <div id="threejs" style="width:100%;height:100%;overflow:hidden"></div>
+    );
   }
 }

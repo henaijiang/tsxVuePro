@@ -1,11 +1,22 @@
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Container, Aside, Main, Select, Option, Divider, Button, Dialog, Tabs, TabPane } from "element-ui"
-import Perview from "./Perview"
-import { v1 } from "uuid"
-import _ from "lodash"
-import "./Home.scss"
-import VueGridLayout from 'vue-grid-layout'
-Vue.use(VueGridLayout)
+import { Component, Vue, Watch } from "vue-property-decorator";
+import {
+  Container,
+  Aside,
+  Main,
+  Select,
+  Option,
+  Divider,
+  Button,
+  Dialog,
+  Tabs,
+  TabPane
+} from "element-ui";
+import Perview from "./Perview";
+import { v1 } from "uuid";
+import _ from "lodash";
+import "./Home.scss";
+import VueGridLayout from "vue-grid-layout";
+Vue.use(VueGridLayout);
 const GridLayout = VueGridLayout.GridLayout;
 const GridItem = VueGridLayout.GridItem;
 const colNum = 12;
@@ -13,15 +24,103 @@ const colNum = 12;
 export default class Home extends Vue {
   /**左侧组件列表数据，key前端用于渲染组件，static用于区分是否可编辑（预览与编辑页面） */
   public asideLeftComponent = [
-    {"x":0, "y":0, "w":colNum/2, "h":6, "i":"0", conmponentName: "HomeTest", key: "", component: 'dv-border-box-1', child: "dv-water-level-pond", static: false},
-    {"x":0, "y":0, "w":colNum/2, "h":6, "i":"1", conmponentName: "HomeTest", key: "", component: 'dv-border-box-2', child: "dv-percent-pond", static: false},
-    {"x":0, "y":0, "w":colNum/2, "h":6, "i":"2", conmponentName: "HomeTest", key: "", component: 'dv-border-box-3', child: "dv-water-level-pond", static: false},
-    {"x":0, "y":0, "w":colNum/2, "h":6, "i":"3", conmponentName: "HomeTest", key: "", component: 'dv-border-box-4', child: "dv-water-level-pond", static: false},
-    {"x":0, "y":0, "w":colNum/2, "h":6, "i":"4", conmponentName: "HomeTest", key: "", component: 'dv-border-box-5', child: "dv-water-level-pond", static: false},
-    {"x":0, "y":0, "w":colNum/2, "h":6, "i":"5", conmponentName: "HomeTest", key: "", component: 'dv-border-box-6', child: "dv-water-level-pond", static: false},
-    {"x":0, "y":0, "w":colNum/2, "h":6, "i":"6", conmponentName: "VCharts", key: "", component: 'dv-border-box-7', child: "dv-water-level-pond", static: false},
-    {"x":0, "y":0, "w":colNum/2, "h":6, "i":"7", conmponentName: "ElTable", key: "", component: 'dv-border-box-8', child: "dv-water-level-pond", static: false}
-  ]
+    {
+      x: 0,
+      y: 0,
+      w: colNum / 2,
+      h: 6,
+      i: "0",
+      conmponentName: "HomeTest",
+      key: "",
+      component: "dv-border-box-1",
+      child: "dv-water-level-pond",
+      static: false
+    },
+    {
+      x: 0,
+      y: 0,
+      w: colNum / 2,
+      h: 6,
+      i: "1",
+      conmponentName: "HomeTest",
+      key: "",
+      component: "dv-border-box-2",
+      child: "dv-percent-pond",
+      static: false
+    },
+    {
+      x: 0,
+      y: 0,
+      w: colNum / 2,
+      h: 6,
+      i: "2",
+      conmponentName: "HomeTest",
+      key: "",
+      component: "dv-border-box-3",
+      child: "dv-water-level-pond",
+      static: false
+    },
+    {
+      x: 0,
+      y: 0,
+      w: colNum / 2,
+      h: 6,
+      i: "3",
+      conmponentName: "HomeTest",
+      key: "",
+      component: "dv-border-box-4",
+      child: "dv-water-level-pond",
+      static: false
+    },
+    {
+      x: 0,
+      y: 0,
+      w: colNum / 2,
+      h: 6,
+      i: "4",
+      conmponentName: "HomeTest",
+      key: "",
+      component: "dv-border-box-5",
+      child: "dv-water-level-pond",
+      static: false
+    },
+    {
+      x: 0,
+      y: 0,
+      w: colNum / 2,
+      h: 6,
+      i: "5",
+      conmponentName: "HomeTest",
+      key: "",
+      component: "dv-border-box-6",
+      child: "dv-water-level-pond",
+      static: false
+    },
+    {
+      x: 0,
+      y: 0,
+      w: colNum / 2,
+      h: 6,
+      i: "6",
+      conmponentName: "VCharts",
+      key: "",
+      component: "dv-border-box-7",
+      child: "dv-water-level-pond",
+      static: false
+    },
+    {
+      x: 0,
+      y: 0,
+      w: colNum / 2,
+      h: 6,
+      i: "7",
+      conmponentName: "ElTable",
+      key: "",
+      component: "dv-border-box-8",
+      child: "dv-water-level-pond",
+      static: false
+    }
+  ];
   /**布局组件数据 */
   public layoutData: Array<any> = [];
   /**布局容器旧宽度 */
@@ -45,20 +144,18 @@ export default class Home extends Vue {
   public async layoutDataLengthChange() {
     const vm = this;
     //增加一定延迟便于断定宽度是否变化
-    setTimeout(()=>{
+    setTimeout(() => {
       const gridLayoutWidth = (vm.$refs.gridLayout as Vue).$el.clientWidth;
       //容器宽度未变化
-      if(gridLayoutWidth == vm.gridLayoutOldWidth){
-      }else{
-        vm.gridLayoutOldWidth = gridLayoutWidth
+      if (gridLayoutWidth == vm.gridLayoutOldWidth) {
+      } else {
+        vm.gridLayoutOldWidth = gridLayoutWidth;
         vm.refreshAllGridItem();
       }
-    },200)
+    }, 200);
   }
   /**created周期请求数据 */
-  public created() {
-    
-  }
+  public created() {}
   /**mounted周期挂载监听器 */
   public mounted() {
     const vm = this;
@@ -69,107 +166,121 @@ export default class Home extends Vue {
   public resizeEventListener() {
     const vm = this;
     vm.loading = true;
-    setTimeout(()=>{vm.refreshAllGridItem();vm.loading = false;},200)
+    setTimeout(() => {
+      vm.refreshAllGridItem();
+      vm.loading = false;
+    }, 200);
   }
   /**销毁监听元素 */
   public beforeDestroy() {
     const vm = this;
-    window.removeEventListener("resize",vm.resizeEventListener)
+    window.removeEventListener("resize", vm.resizeEventListener);
   }
   /**大小改变 */
-  public resize(i: string, newH: number, newW: number, newHPx: number, newWPx: number) {
-
-  }
+  public resize(
+    i: string,
+    newH: number,
+    newW: number,
+    newHPx: number,
+    newWPx: number
+  ) {}
   /**大小改变结束 */
-  public resized(i: string, newH: number, newW: number, newHPx: number, newWPx: number) {
+  public resized(
+    i: string,
+    newH: number,
+    newW: number,
+    newHPx: number,
+    newWPx: number
+  ) {
     const vm = this;
     //更新对应组件，防止dataV元素大小不改变问题
     const gridLayoutWidth = (vm.$refs.gridLayout as Vue).$el.clientWidth;
-    const data = _.find(vm.layoutData,(item: any)=>item.i == i);
+    const data = _.find(vm.layoutData, (item: any) => item.i == i);
     vm.selectedGridItemData = data;
     vm.selectDataChange();
     //容器宽度未变化
-    if(gridLayoutWidth == vm.gridLayoutOldWidth){
+    if (gridLayoutWidth == vm.gridLayoutOldWidth) {
       vm.layoutUpdated = true;
-      vm.$nextTick(()=>{
+      vm.$nextTick(() => {
         vm.layoutUpdated = false;
-      })
-    }else{
-      vm.gridLayoutOldWidth = gridLayoutWidth
+      });
+    } else {
+      vm.gridLayoutOldWidth = gridLayoutWidth;
     }
   }
   /**位置改变 */
-  public move(i: string, newX: number, newY: number) {
-
-  }
+  public move(i: string, newX: number, newY: number) {}
   /**位置改变结束 */
   public moved(i: string, newX: number, newY: number) {
     const vm = this;
-    const data = _.find(vm.layoutData,(item: any)=>item.i == i);
+    const data = _.find(vm.layoutData, (item: any) => item.i == i);
     vm.selectedGridItemData = data;
     const gridLayoutWidth = (vm.$refs.gridLayout as Vue).$el.clientWidth;
     //容器宽度未变化
-    if(gridLayoutWidth == vm.gridLayoutOldWidth){
+    if (gridLayoutWidth == vm.gridLayoutOldWidth) {
       vm.layoutUpdated = true;
-      vm.$nextTick(()=>{
+      vm.$nextTick(() => {
         vm.layoutUpdated = false;
-      })
-    }else{
-      vm.gridLayoutOldWidth = gridLayoutWidth
+      });
+    } else {
+      vm.gridLayoutOldWidth = gridLayoutWidth;
     }
   }
   /**刷新所有子组件 */
   public async refreshAllGridItem() {
     const vm = this;
     await vm.$nextTick();
-    vm.layoutData.forEach(item=>{
+    vm.layoutData.forEach(item => {
       item.key = v1();
       vm.registerComponent(item);
     });
-    if(vm.selectedGridItemData.i){
-      vm.selectGridItem()
+    if (vm.selectedGridItemData.i) {
+      vm.selectGridItem();
     }
   }
   /**布局更新 */
   public layoutUpdatedEvent(newLayout: Array<any>) {
     const vm = this;
-    if(vm.layoutUpdated){
-      return
+    if (vm.layoutUpdated) {
+      return;
     }
     vm.refreshAllGridItem();
   }
   /**容器大小改变 */
-  public containerResizedEvent(i: string, newH: number, newW: number, newHPx: number, newWPx: number) {
-  }
+  public containerResizedEvent(
+    i: string,
+    newH: number,
+    newW: number,
+    newHPx: number,
+    newWPx: number
+  ) {}
   /**
    *开始拖拽标签
    */
   public startDragTag(evt: DragEvent, data: any) {
     const vm = this;
-    if(!evt || !evt.target || !evt.dataTransfer)
-    return
+    if (!evt || !evt.target || !evt.dataTransfer) return;
     //设置拖拽数据
     evt.dataTransfer.setData("Text", JSON.stringify(data));
-    evt.dataTransfer.setDragImage((evt.target as Element), 0, 0);
+    evt.dataTransfer.setDragImage(evt.target as Element, 0, 0);
     vm.dragMaskShow = true;
   }
   /**
    * 拖拽释放
-   * @param evt 
+   * @param evt
    */
   public async drop(evt: DragEvent) {
     const vm = this;
-    if(!evt || !evt.target || !evt.dataTransfer)
-    return
-    const colWidth = (evt.target as any).clientWidth/colNum;
-    const colHeight = (evt.target as any).clientHeight/colNum;
-    const x = Math.floor(evt.offsetX/colWidth);
-    const y = Math.floor(evt.offsetY/colHeight);
+    if (!evt || !evt.target || !evt.dataTransfer) return;
+    const colWidth = (evt.target as any).clientWidth / colNum;
+    const colHeight = (evt.target as any).clientHeight / colNum;
+    const x = Math.floor(evt.offsetX / colWidth);
+    const y = Math.floor(evt.offsetY / colHeight);
     let data = JSON.parse(evt.dataTransfer.getData("Text"));
     data.x = x;
     data.y = y;
     //判断当前行是否放置不下，若是则修正x坐标
-    if((x + data.w) > colNum){
+    if (x + data.w > colNum) {
       data.x = 0;
     }
     data.i = v1();
@@ -186,30 +297,32 @@ export default class Home extends Vue {
   }
   /**
    * 拖拽悬停
-   * @param evt 
+   * @param evt
    */
   public dragOver(evt: DragEvent) {
     evt.preventDefault();
   }
   /**
    * 删除组件
-   * @param i 
+   * @param i
    */
-  public deleteComponent(i: string, e:MouseEvent) {
+  public deleteComponent(i: string, e: MouseEvent) {
     const vm = this;
     e.stopPropagation();
-    vm.$confirm('此操作将删除该组件, 是否继续?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning',
+    vm.$confirm("此操作将删除该组件, 是否继续?", "提示", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
       lockScroll: false
-    }).then(async () => {
-      const index = _.findIndex(vm.layoutData, (item) => item.i == i);
-      vm.$delete(vm.layoutData, index);
-      vm.$message.success("已删除!");
-    }).catch(() => {
-      vm.$message.info("已取消");       
-    });
+    })
+      .then(async () => {
+        const index = _.findIndex(vm.layoutData, item => item.i == i);
+        vm.$delete(vm.layoutData, index);
+        vm.$message.success("已删除!");
+      })
+      .catch(() => {
+        vm.$message.info("已取消");
+      });
   }
   /**
    * 注册组件并挂载到实例上
@@ -224,24 +337,27 @@ export default class Home extends Vue {
         data: {
           propMsg
         }
-      })
-      vm.selectGridItem()
-    })
+      });
+      vm.selectGridItem();
+    });
   }
   /**选中元素样式变化 */
   public selectGridItem() {
     const vm = this;
     const i = vm.selectedGridItemData.i;
-    if(!i){
-      return
+    if (!i) {
+      return;
     }
-    $(`#${i}`).addClass('selected').siblings().removeClass('selected');
+    $(`#${i}`)
+      .addClass("selected")
+      .siblings()
+      .removeClass("selected");
   }
   /**选中子组件数据发生变化，更新该组件 */
   public async selectDataChange() {
     const vm = this;
-    if(!vm.selectedGridItemData.key) {
-      return
+    if (!vm.selectedGridItemData.key) {
+      return;
     }
     vm.selectedGridItemData.key = v1();
     await vm.$nextTick();
@@ -254,14 +370,14 @@ export default class Home extends Vue {
   /**切换tab页 */
   public async tabClickHandle(tab: Vue, event: MouseEvent) {
     const vm = this;
-    if(vm.tabActiveName == "perview") {
+    if (vm.tabActiveName == "perview") {
       vm.perviewLayoutData = [];
-      vm.layoutData.forEach(item=>{
+      vm.layoutData.forEach(item => {
         let obj = _.cloneDeep(item);
         obj.static = true;
-        vm.perviewLayoutData.push(obj)
-      })
-    }else{
+        vm.perviewLayoutData.push(obj);
+      });
+    } else {
       vm.perviewLayoutData = [];
       await vm.$nextTick();
       vm.loadGridLayout();
@@ -281,18 +397,36 @@ export default class Home extends Vue {
         <Aside>
           {/* 左侧组件列表 */}
           <ul class="asideLeftClass">
-            {vm.asideLeftComponent.map(item=>
-              <li class="liSpan" draggable={true} key={item.i} ondragend={vm.dragend} ondragstart={(evt: DragEvent)=>{vm.startDragTag(evt,item)}}>
+            {vm.asideLeftComponent.map(item => (
+              <li
+                class="liSpan"
+                draggable={true}
+                key={item.i}
+                ondragend={vm.dragend}
+                ondragstart={(evt: DragEvent) => {
+                  vm.startDragTag(evt, item);
+                }}
+              >
                 <div class="spanTag">{item.component}</div>
               </li>
-            )}
+            ))}
           </ul>
         </Aside>
-        <Main 
-          class="mainClass"
-        >
-          <Button vShow={vm.tabActiveName == "write"} class="saveButton" onClick={vm.saveData} type="primary" size="mini">保存</Button>
-          <Tabs type="card" vModel={vm.tabActiveName} ontab-click={vm.tabClickHandle}>
+        <Main class="mainClass">
+          <Button
+            vShow={vm.tabActiveName == "write"}
+            class="saveButton"
+            onClick={vm.saveData}
+            type="primary"
+            size="mini"
+          >
+            保存
+          </Button>
+          <Tabs
+            type="card"
+            vModel={vm.tabActiveName}
+            ontab-click={vm.tabClickHandle}
+          >
             <TabPane label="编辑" name="write">
               <div class="gridLayoutClass">
                 {/* GridLayout组件布局 */}
@@ -302,21 +436,26 @@ export default class Home extends Vue {
                   vShow={vm.dragMaskShow}
                   ondrop={vm.drop}
                   ondragover={vm.dragOver}
-                >
-                </div>
+                ></div>
                 <GridLayout
                   v-loading={vm.loading}
                   key={vm.gridLayoutKey}
                   ref="gridLayout"
-                  style={{ minHeight: '500px'}}
+                  style={{ minHeight: "500px" }}
                   layout={vm.layoutData}
-                  {...{on:{'update:layout': (layout: any)=>{vm.layoutData = layout} }}}
+                  {...{
+                    on: {
+                      "update:layout": (layout: any) => {
+                        vm.layoutData = layout;
+                      }
+                    }
+                  }}
                   colNum={colNum}
                   rowHeight={30}
                   margin={[10, 10]}
                   onlayout-updated={vm.layoutUpdatedEvent}
                 >
-                  {vm.layoutData.map((item: any)=> 
+                  {vm.layoutData.map((item: any) => (
                     <GridItem
                       ref="gridItem"
                       static={false}
@@ -333,18 +472,26 @@ export default class Home extends Vue {
                       key={item.key}
                       dragIgnoreFrom="i"
                       oncontainer-resized={vm.containerResizedEvent}
-                      nativeOnClick={()=>{vm.selectedGridItemData = item;vm.selectGridItem()}}
+                      nativeOnClick={() => {
+                        vm.selectedGridItemData = item;
+                        vm.selectGridItem();
+                      }}
                     >
-                      <div style={{height: "100%"}}>
+                      <div style={{ height: "100%" }}>
                         <div class="itemHeader">
                           <span>{item.component}</span>
-                          <i class="el-icon-delete iconClass" onClick={(e:MouseEvent)=>{vm.deleteComponent(item.i,e)}}></i>
+                          <i
+                            class="el-icon-delete iconClass"
+                            onClick={(e: MouseEvent) => {
+                              vm.deleteComponent(item.i, e);
+                            }}
+                          ></i>
                         </div>
                         <Divider></Divider>
                         <div ref={item.key} class="itemMain"></div>
                       </div>
                     </GridItem>
-                  )}
+                  ))}
                 </GridLayout>
               </div>
             </TabPane>
@@ -355,8 +502,9 @@ export default class Home extends Vue {
         </Main>
         <Aside class="asideRightClass">
           {/* 右侧属性编辑栏 */}
+          右侧属性编辑栏
         </Aside>
       </Container>
-    )
+    );
   }
 }

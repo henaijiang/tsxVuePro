@@ -78,16 +78,11 @@ module.exports = {
     }
   },
   devServer: {
-    port: 8080,
+    port: 8081,
     proxy: {
       "/api": {
         ws: false,
-        target: "http://192.168.199.23:2020"
-      },
-      /** 文档 */
-      "/docs": {
-        ws: false,
-        target: "http://192.168.199.23:2020"
+        target: "http://192.168.5.141:8081"
       }
     }
   }

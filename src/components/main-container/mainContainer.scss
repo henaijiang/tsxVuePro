@@ -1,0 +1,14 @@
+.content-body {
+  .menu-aside {
+    border-right: solid 1px #e6e6e6;
+    .el-menu {
+      border-right: none;
+    }
+    .el-scrollbar__wrap {
+      overflow-x: hidden;
+    }
+  }
+  .content-main {
+    padding: 8px;
+  }
+}
