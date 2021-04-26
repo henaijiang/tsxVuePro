@@ -37,7 +37,17 @@
       }
     }
     .content-main {
-      padding: 8px;
+      padding: 0;
+      .tab-header,
+      .main {
+        padding: 0;
+        padding-left: 8px;
+        padding-bottom: 8px;
+      }
+      .tab-header {
+        height: 50px !important;
+        padding: 8px;
+      }
     }
   }
 }

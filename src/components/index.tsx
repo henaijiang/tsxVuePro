@@ -146,30 +146,34 @@ export default class Index extends Vue {
                 </Menu>
               </el-scrollbar>
             </Aside>
-            <Main class="content-main" style={{ height: `${vm.menuHeight}px` }}>
-              <Tabs
-                type="card"
-                on-tab-click={vm.tabClick}
-                on-tab-remove={vm.removeTab}
-                v-model={vm.tabsValue}
-              >
-                {vm.tabsViews.map(tab => (
-                  <TabPane
-                    key={tab.meta.title}
-                    closable={tab.path !== "/"}
-                    label={tab.meta.title}
-                    name={tab.path}
-                  ></TabPane>
-                ))}
-              </Tabs>
-              <keep-alive>
-                {vm.$route.meta.keepAlive && (
+            <Main class="content-main">
+              <Header class="tab-header">
+                <Tabs
+                  type="card"
+                  on-tab-click={vm.tabClick}
+                  on-tab-remove={vm.removeTab}
+                  v-model={vm.tabsValue}
+                >
+                  {vm.tabsViews.map(tab => (
+                    <TabPane
+                      key={tab.meta.title}
+                      closable={tab.path !== "/"}
+                      label={tab.meta.title}
+                      name={tab.path}
+                    ></TabPane>
+                  ))}
+                </Tabs>
+              </Header>
+              <Main class="main" style={{ height: `${vm.menuHeight - 45}px` }}>
+                <keep-alive>
+                  {vm.$route.meta.keepAlive && (
+                    <router-view key={vm.$route.name} />
+                  )}
+                </keep-alive>
+                {!vm.$route.meta.keepAlive && (
                   <router-view key={vm.$route.name} />
                 )}
-              </keep-alive>
-              {!vm.$route.meta.keepAlive && (
-                <router-view key={vm.$route.name} />
-              )}
+              </Main>
             </Main>
           </Container>
         </section>
