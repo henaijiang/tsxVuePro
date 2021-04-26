@@ -1,7 +1,6 @@
 const webpack = require("webpack");
 module.exports = {
   lintOnSave: false,
-  publicPath: "./",
   productionSourceMap: false,
   chainWebpack: config => {
     /* 修改入口文件 */
@@ -78,11 +77,23 @@ module.exports = {
     }
   },
   devServer: {
-    port: 8081,
+    port: 3000,
     proxy: {
-      "/api": {
+      "/login": {
         ws: false,
-        target: "http://192.168.5.141:8081"
+        target: "http://localhost:3000"
+      },
+      "/captch": {
+        ws: false,
+        target: "http://localhost:3000"
+      },
+      "/logout": {
+        ws: false,
+        target: "http://localhost:3000"
+      },
+      "/user": {
+        ws: false,
+        target: "http://localhost:3000"
       }
     }
   }

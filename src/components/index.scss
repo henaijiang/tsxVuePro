@@ -1,3 +1,43 @@
-.indexHome {
-  padding: 8px;
+.container {
+  height: 100%;
+  .container-header {
+    background: #409eff;
+    display: flex;
+    justify-content: space-between;
+    .user {
+      line-height: 60px;
+    }
+    .clock {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      line-height: 20px;
+      padding: 10px 0;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+    }
+    .clock:hover {
+      color: #fff;
+    }
+  }
+  .content-body {
+    .menu-aside {
+      box-sizing: border-box;
+      border-right: solid 1px #e6e6e6;
+      .el-menu {
+        border-right: none;
+      }
+      .el-scrollbar {
+        .el-scrollbar__wrap {
+          overflow-x: hidden;
+        }
+        .is-horizontal {
+          display: none;
+        }
+      }
+    }
+    .content-main {
+      padding: 8px;
+    }
+  }
 }

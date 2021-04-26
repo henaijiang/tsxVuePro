@@ -28,9 +28,9 @@ export default class Threejs extends Vue {
     vm.createdBox();
     vm.createdLine();
     vm.initBall();
-    vm.loadObjModel("model/IronMan/IronMan", 0.5, new THREE.Vector3(0, -4, 0));
+    vm.loadObjModel("/model/IronMan/IronMan", 0.5, new THREE.Vector3(0, -4, 0));
     vm.loadObjModel(
-      "model/wolf/Wolf_One_obj",
+      "/model/wolf/Wolf_One_obj",
       60,
       new THREE.Vector3(50, 45, 0)
     );

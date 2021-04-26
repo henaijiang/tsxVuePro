@@ -34,7 +34,7 @@ export default class Login extends Vue {
         setTimeout(() => {
           vm.isLogin = false;
           sessionStorage.setItem("loginUser", vm.userInfo.name);
-          vm.$router.push({ path: "/main" });
+          vm.$router.push({ path: "/" });
         }, 1500);
       }
     });
