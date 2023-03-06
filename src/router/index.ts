@@ -12,7 +12,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    component: () => import("@/components/Index"),
+    component: () => import("@/components/index"),
     meta: { keepAlive: true },
     children: [wyyRouter, threeRouter, mapboxGlRouter, homeRouter, testRouter]
   },
